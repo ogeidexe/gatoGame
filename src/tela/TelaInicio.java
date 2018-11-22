@@ -86,7 +86,7 @@ public class TelaInicio extends JFrame implements IControles {
 		painel1.add(lcat2);
 		painel1.add(lcat3);
 		painel1.add(lcat4);
-		painel1.addKeyListener(c.obterTecla);
+		painel1.addKeyListener(c.obterTeclaPressionada());
 	}
 	
 	
