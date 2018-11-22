@@ -1,11 +1,14 @@
 package tela;
 
 import java.awt.Dimension;
+import java.awt.Event;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.TexturePaint;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
 
 import javax.swing.ImageIcon;
@@ -13,12 +16,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import interfaces.IControles;
+import motor.Controles;;
 
 
 
 
-
-public class TelaInicio extends JFrame {
+public class TelaInicio extends JFrame implements IControles {
 	JButton btnGato1;
 	JButton btnGato2;
 	JButton btnGato3;
@@ -31,9 +35,9 @@ public class TelaInicio extends JFrame {
 	JLabel lcat2;
 	JLabel lcat3;
 	JLabel lcat4;
-	
+	JPanel painel1;
 	public TelaInicio() {
-		setLayout(null );
+		painel1 = new JPanel(null);
 		btnGato1 = new JButton("Escolher");
 		btnGato1.setBounds(100, 200, 100	, 50);
 		btnGato2 = new JButton("Escolher");
@@ -72,15 +76,17 @@ public class TelaInicio extends JFrame {
 			System.out.println("imagen do gato nula");
 		}
 
-		
-		this.add(btnGato1);
-		this.add(btnGato2);
-		this.add(btnGato3);
-		this.add(btnGato4);
-		this.add(lcat1);
-		this.add(lcat2);
-		this.add(lcat3);
-		this.add(lcat4);
+		Controles c = new Controles();
+		add(painel1);
+		painel1.add(btnGato1);
+		painel1.add(btnGato2);
+		painel1.add(btnGato3);
+		painel1.add(btnGato4);
+		painel1.add(lcat1);
+		painel1.add(lcat2);
+		painel1.add(lcat3);
+		painel1.add(lcat4);
+		painel1.addKeyListener(c.obterTecla);
 	}
 	
 	
