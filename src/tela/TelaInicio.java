@@ -7,6 +7,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.TexturePaint;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
@@ -16,6 +18,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import interfaces.IControles;
 //implements IControles
 public class TelaInicio extends JFrame  {
@@ -23,6 +27,8 @@ public class TelaInicio extends JFrame  {
 	JButton btnGato2;
 	JButton btnGato3;
 	JButton btnGato4;
+	JButton btnGato5;
+	JButton btnGato6;
 	ImageIcon cat1;
 	ImageIcon cat2;
 	ImageIcon cat3;
@@ -32,6 +38,7 @@ public class TelaInicio extends JFrame  {
 	JLabel lcat3;
 	JLabel lcat4;
 	JPanel painel1;
+	JTextField ipServidor;
 
 	public TelaInicio() {
 		painel1 = new JPanel(null);
@@ -43,7 +50,12 @@ public class TelaInicio extends JFrame  {
 		btnGato3.setBounds(400, 200, 100, 50);
 		btnGato4 = new JButton("Escolher");
 		btnGato4.setBounds(550, 200, 100, 50);
-
+		
+		btnGato5 = new JButton("Servidor");
+		btnGato5.setBounds(100, 300, 100, 50);
+		btnGato6 = new JButton("Cliente");
+		btnGato6.setBounds(250, 300, 100, 50);
+		
 		cat1 = new ImageIcon(getClass().getResource("imagens/gato1.png"));
 		cat2 = new ImageIcon(getClass().getResource("imagens/gato2.png"));
 		cat3 = new ImageIcon(getClass().getResource("imagens/gato3.png"));
@@ -74,25 +86,18 @@ public class TelaInicio extends JFrame  {
 		painel1.add(btnGato2);
 		painel1.add(btnGato3);
 		painel1.add(btnGato4);
+		painel1.add(btnGato5);
+		painel1.add(btnGato6);
 		painel1.add(lcat1);
 		painel1.add(lcat2);
 		painel1.add(lcat3);
 		painel1.add(lcat4);
-	    addKeyListener( new KeyListener()
-			{
-				public void keyTyped(KeyEvent e)
-				{
-					System.out.println(e.getKeyChar());				
-				}
-				@Override
-				public void keyReleased(KeyEvent e)
-				{
-				}
-				@Override
-				public void keyPressed(KeyEvent e) 
-				{
-				}
-			});
+		//ESSE BOTÃO É DO Cliente
+		btnGato6.addActionListener(new acaoCliente());
+		//ESSE BOTÃO É DO Servidor
+		//btnGato5.addActionListener(new acaoServidor());
+		
+	
 	}
 	
 	public static void main(String[] args) {
@@ -106,7 +111,81 @@ public class TelaInicio extends JFrame  {
 		
 	}
 
+	public class acaoCliente implements ActionListener,IControles{
 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			JLabel texto = new JLabel("Digite o IP e pressione Enter");
+			painel1.remove(btnGato5);
+			
+			ipServidor = new JTextField();
+			ipServidor.setBounds(100, 325, 200, 25);
+			ipServidor.addKeyListener(this);
+			
+			btnGato6.setBounds(400, 300, 100, 50);
+			btnGato6.setText("OK");
+			texto.setBounds(100, 300, 300, 25);
+			painel1.add(ipServidor);
+			painel1.add(texto);
+			painel1.repaint();
+			
+			
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+			System.out.println(e.getKeyChar());	
+			if(e.getKeyCode()==e.VK_ENTER) {
+				//
+				System.out.println("ai meu enter");
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			if(e.getKeyCode()==e.VK_ENTER) {
+				
+				System.out.println("ai meu enter");
+				System.exit(0);
+			}
+		}
+		
+	}
+	public class acaoServidor implements ActionListener,IControles{
+
+		@Override
+		public void keyPressed(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyReleased(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyTyped(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
 
 	
+	}
 }
