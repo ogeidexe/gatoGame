@@ -56,10 +56,10 @@ public class TelaInicio extends JFrame  {
 		btnGato6 = new JButton("Cliente");
 		btnGato6.setBounds(250, 300, 100, 50);
 		
-		cat1 = new ImageIcon(getClass().getResource("imagens/gato1.png"));
-		cat2 = new ImageIcon(getClass().getResource("imagens/gato2.png"));
-		cat3 = new ImageIcon(getClass().getResource("imagens/gato3.png"));
-		cat4 = new ImageIcon(getClass().getResource("imagens/gato4.png"));
+//		cat1 = new ImageIcon(getClass().getResource("imagens/gato1.png"));
+//		cat2 = new ImageIcon(getClass().getResource("imagens/gato2.png"));
+//		cat3 = new ImageIcon(getClass().getResource("imagens/gato3.png"));
+//		cat4 = new ImageIcon(getClass().getResource("imagens/gato4.png"));
 
 		lcat1 = new JLabel();
 		lcat1.setBounds(100, 50, 100, 100);
@@ -132,14 +132,14 @@ public class TelaInicio extends JFrame  {
 			
 			
 		}
-
+		int i= 0;
 		@Override
 		public void keyPressed(KeyEvent e) {
 			// TODO Auto-generated method stub
 			System.out.println(e.getKeyChar());	
 			if(e.getKeyCode()==e.VK_ENTER) {
-				//
-				System.out.println("ai meu enter");
+				
+				System.out.println("ai meu enter"+i++);
 			}
 		}
 
