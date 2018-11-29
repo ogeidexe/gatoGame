@@ -33,7 +33,7 @@ public class Cliente extends Thread
 
      // out.writeDouble(valor); 
       out.flush();
-
+//ola
     }
     catch (Exception ex)
     {
