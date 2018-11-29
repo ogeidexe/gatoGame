@@ -44,7 +44,7 @@ public class Cliente extends Thread
         System.err.println("Erro: " + ex.getMessage());
       }
     }
-  
+  //olá
   
   	public static void main(String [] args)
      {
