@@ -49,7 +49,7 @@ public class Cliente extends Thread
   	public static void main(String [] args)
      {
         //Cria o cliente para se conectar ao servidor no IP 127.0.0.1 e porta 12345
-        Cliente cliente = new Cliente("127.0.0.1", 12345);
+        Cliente cliente = new Cliente("192.168.43.41", 12345);
         cliente.start(); //Coloca a thread do cliente para ser executada
      }
   }
