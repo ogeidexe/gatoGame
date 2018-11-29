@@ -22,21 +22,16 @@ public class Cliente extends Thread
   {
     try
     {
-      System.out.println("** Pagamento On Line **");
-      Scanner input = new Scanner(System.in);
-      System.out.print("Informe o numero do cartão: ");
-      double cartao = input.nextDouble(); 
-      System.out.print("Informe o valor da compra: ");
-      double valor = input.nextDouble(); 
-
+      System.out.println("CONECTOU");
+      
       Socket socket = new Socket(ip, porta); //Conecta-se ao servidor
       //Obtém os streams de entrada e saída
       DataInputStream in = new DataInputStream(socket.getInputStream());
       DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-      out.writeDouble(cartao); 
+     // out.writeDouble(cartao); 
       out.flush(); //Força o envio
 
-      out.writeDouble(valor); 
+     // out.writeDouble(valor); 
       out.flush();
 
     }
@@ -50,11 +45,8 @@ public class Cliente extends Thread
   	public static void main(String [] args)
      {
         //Cria o cliente para se conectar ao servidor no IP 127.0.0.1 e porta 12345
-<<<<<<< HEAD
         Cliente cliente = new Cliente("192.168.43.88", 12345);
-=======
-        Cliente cliente = new Cliente("192.168.43.41", 12345);
->>>>>>> branch 'Waleria' of https://github.com/ogeidexe/gatoGame.git
+
         cliente.start(); //Coloca a thread do cliente para ser executada
      }
   }
