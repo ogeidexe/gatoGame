@@ -50,7 +50,7 @@ public class TelaInicio extends JFrame  {
 		btnGato3.setBounds(400, 200, 100, 50);
 		btnGato4 = new JButton("Escolher");
 		btnGato4.setBounds(550, 200, 100, 50);
-		
+		//TERCHO ALEATORIO
 		btnGato5 = new JButton("Servidor");
 		btnGato5.setBounds(100, 300, 100, 50);
 		btnGato6 = new JButton("Cliente");
