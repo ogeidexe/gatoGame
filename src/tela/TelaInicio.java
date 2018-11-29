@@ -159,10 +159,9 @@ public class TelaInicio extends JFrame  {
 				System.exit(0);
 			}
 		}
-		
-	}
+		3rwrr3
 	public class acaoServidor implements ActionListener,IControles{
-
+3
 		@Override
 		public void keyPressed(KeyEvent arg0) {
 			// TODO Auto-generated method stub
