@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import MultPlayer.Cliente;
 import interfaces.IControles;
 //implements IControles
 public class TelaInicio extends JFrame  {
@@ -38,7 +39,7 @@ public class TelaInicio extends JFrame  {
 	JLabel lcat3;
 	JLabel lcat4;
 	JPanel painel1;
-	JTextField ipServidor;
+	JTextField ipServidor = new JTextField();
 
 	public TelaInicio() {
 		painel1 = new JPanel(null);
@@ -56,7 +57,7 @@ public class TelaInicio extends JFrame  {
 		btnGato6 = new JButton("Cliente");
 		btnGato6.setBounds(250, 300, 100, 50);
 		
-		cat1 = new ImageIcon(TelaInicio.class.getResource("imagens/gato1.png"));
+		//cat1 = new ImageIcon(TelaInicio.class.getResource("imagens/gato1.png"));
 		
 //		cat2 = new ImageIcon(getClass().getResource("imagens/gato2.png"));
 //		cat3 = new ImageIcon(getClass().getResource("imagens/gato3.png"));
@@ -98,6 +99,7 @@ public class TelaInicio extends JFrame  {
 		//ESSE BOTÃO É DO Servidor
 		//btnGato5.addActionListener(new acaoServidor());
 		
+		
 	
 	}
 	
@@ -120,7 +122,7 @@ public class TelaInicio extends JFrame  {
 			JLabel texto = new JLabel("Digite o IP e pressione Enter");
 			painel1.remove(btnGato5);
 			
-			ipServidor = new JTextField();
+			
 			ipServidor.setBounds(100, 325, 200, 25);
 			ipServidor.addKeyListener(this);
 			
@@ -139,8 +141,8 @@ public class TelaInicio extends JFrame  {
 			// TODO Auto-generated method stub
 			System.out.println(e.getKeyChar());	
 			if(e.getKeyCode()==e.VK_ENTER) {
-				
-				System.out.println("ai meu enter"+i++);
+				Cliente cl = new Cliente(ipServidor.getText(), 12345);
+				System.out.println(ipServidor.getText());
 			}
 		}
 
@@ -154,9 +156,6 @@ public class TelaInicio extends JFrame  {
 		public void keyTyped(KeyEvent e) {
 			// TODO Auto-generated method stub
 			if(e.getKeyCode()==e.VK_ENTER) {
-				
-				System.out.println("ai meu enter");
-				System.exit(0);
 			}
 		}
 		
