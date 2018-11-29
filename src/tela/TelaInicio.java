@@ -56,7 +56,8 @@ public class TelaInicio extends JFrame  {
 		btnGato6 = new JButton("Cliente");
 		btnGato6.setBounds(250, 300, 100, 50);
 		
-//		cat1 = new ImageIcon(getClass().getResource("imagens/gato1.png"));
+		cat1 = new ImageIcon(TelaInicio.class.getResource("imagens/gato1.png"));
+		
 //		cat2 = new ImageIcon(getClass().getResource("imagens/gato2.png"));
 //		cat3 = new ImageIcon(getClass().getResource("imagens/gato3.png"));
 //		cat4 = new ImageIcon(getClass().getResource("imagens/gato4.png"));
