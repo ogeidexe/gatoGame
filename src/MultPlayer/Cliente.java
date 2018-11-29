@@ -45,12 +45,16 @@ public class Cliente extends Thread
         System.err.println("Erro: " + ex.getMessage());
       }
     }
-  
+  //olkjhfgdvdv
   
   	public static void main(String [] args)
      {
         //Cria o cliente para se conectar ao servidor no IP 127.0.0.1 e porta 12345
+<<<<<<< HEAD
         Cliente cliente = new Cliente("192.168.43.88", 12345);
+=======
+        Cliente cliente = new Cliente("192.168.43.41", 12345);
+>>>>>>> branch 'Waleria' of https://github.com/ogeidexe/gatoGame.git
         cliente.start(); //Coloca a thread do cliente para ser executada
      }
   }
