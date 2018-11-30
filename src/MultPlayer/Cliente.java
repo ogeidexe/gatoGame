@@ -14,7 +14,6 @@ public class Cliente extends Thread
   {
     this.ip = ip;
     this.porta = porta;
-    //this.start();
   }
 
   @Override
@@ -22,30 +21,31 @@ public class Cliente extends Thread
   {
     try
     {
-      System.out.println("CONECTOU");
-      
+            
       Socket socket = new Socket(ip, porta); //Conecta-se ao servidor
       //Obtém os streams de entrada e saída
+      System.out.println("CONECTOU"+socket.isConnected());
       DataInputStream in = new DataInputStream(socket.getInputStream());
       DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-     // out.writeDouble(cartao); 
+      int i = 561;
+      out.writeInt(i); 
       out.flush(); //Força o envio
-
+      System.out.println(socket.isClosed());
      // out.writeDouble(valor); 
       out.flush();
-//ola
+ 
     }
     catch (Exception ex)
     {
         System.err.println("Erro: " + ex.getMessage());
+     
       }
     }
-  //olkjhfgdvdv
   
   	public static void main(String [] args)
      {
         //Cria o cliente para se conectar ao servidor no IP 127.0.0.1 e porta 12345
-        Cliente cliente = new Cliente("192.168.43.88", 12345);
+        Cliente cliente = new Cliente("127.0.0.1", 12345);
 
         cliente.start(); //Coloca a thread do cliente para ser executada
      }

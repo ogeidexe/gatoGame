@@ -4,9 +4,15 @@ import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Enumeration;
+
+import javax.swing.JOptionPane;
 
 public class Servidor extends Thread{
 	private static ArrayList<BufferedWriter>clientes;           
@@ -26,10 +32,10 @@ public class Servidor extends Thread{
 	      //Obtém os streams de entrada e saída
 	      DataInputStream in = new DataInputStream(socket.getInputStream());
 	      DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-
-	      double cartao = in.readDouble(); 
-	      double valor = in.readDouble(); 
-
+	      int i = in.readInt();
+	      if(i==561) {
+	    	  JOptionPane.showMessageDialog(null, i);
+	      }
 	    }
 	    catch (IOException ex)
 	    {
@@ -37,8 +43,30 @@ public class Servidor extends Thread{
 	    }
 
 	  }
-	
-	     public static void main(String [] args)
+	  public static String getIp() {
+	        String ipAddress = null;
+	        Enumeration<NetworkInterface> net = null;
+	        try {
+	            net = NetworkInterface.getNetworkInterfaces();
+	        } catch (SocketException e) {
+	            throw new RuntimeException(e);
+	        }
+
+	        while (net.hasMoreElements()) {
+	            NetworkInterface element = net.nextElement();
+	            Enumeration<InetAddress> addresses = element.getInetAddresses();
+	            while (addresses.hasMoreElements()) {
+	                InetAddress ip = addresses.nextElement();
+
+	                if (ip.isSiteLocalAddress()) {
+	                    ipAddress = ip.getHostAddress();
+	                }           
+	            }
+	        }
+	        return ipAddress;
+	    }
+	  
+	    public static void main(String [] args)
 	     {
 	       try
 	       {
