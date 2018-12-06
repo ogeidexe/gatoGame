@@ -1,5 +1,7 @@
 package tela;
 
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.FlowLayout;
@@ -18,6 +20,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -48,9 +51,12 @@ public class TelaInicio extends JFrame  {
 	JLabel lcat2;
 	JLabel lcat3;
 	JLabel lcat4;
+	JLabel Fundo;
 	JPanel painel1;
 	JTextField ipServidor = new JTextField();
-
+	
+	
+	
 	public TelaInicio() {
 		//Os botões da tela
 		painel1 = new JPanel(null);
@@ -96,6 +102,10 @@ public class TelaInicio extends JFrame  {
 		} else {
 			System.out.println("imagen do gato nula");
 		}
+		
+		
+		
+		
      	add(painel1);
 		painel1.add(btnGato1);
 		painel1.add(btnGato2);
