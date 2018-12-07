@@ -1,6 +1,9 @@
 package tela;
 
-import javax.swing.Icon;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -8,31 +11,47 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class AmbienteJogo extends JFrame{
-	JPanel painel2;
+	JPanel fundo;
+	ImageIcon bandeirinhas;
 	JLabel Fundo;
-	Icon fundo;
 	
 	
-	public void test(){
-		painel2 = new JPanel(null);
-		fundo = new ImageIcon(getClass().getResource("/resources/Menu.jpg"));
+	
+	
+	
+	public AmbienteJogo() {
+		setTitle("Ambiente do Jogo");
+		setVisible(true);
+		setResizable(true);
+		setSize(800,600);
+		setFocusable(true);
+		setFocusTraversalKeysEnabled(false);
+		
+		bandeirinhas = new ImageIcon(getClass().getResource("/resources/Corrida.jpg"));
+		
+		
 		Fundo = new JLabel();
-		Fundo.setIcon(fundo);
-				
-	     add(painel2);
-	     add(Fundo);
-	    
-	}
-	
-	
-	public static void main(String[] args) {
-		AmbienteJogo  mm = new AmbienteJogo();
-		mm.setResizable(false);
-		mm.setSize(800, 600);
-		mm.setLocationRelativeTo(null);
-		mm.setVisible(true);
-		mm.setFocusable(true);
-		mm.setFocusTraversalKeysEnabled(false);
+		Fundo.setBounds(0, 0, 50, 50);
+		Fundo.setIcon(bandeirinhas);
+		
+		
+		
+		
+		
+		
+		add(Fundo);
+		
 		
 	}
+
+
+
+	public static void main(String arg[]) {
+		AmbienteJogo mm = new AmbienteJogo();
+		//mm.setSize(800,600);
+		mm.setVisible(true);
+		
+	}
+
+
 }
