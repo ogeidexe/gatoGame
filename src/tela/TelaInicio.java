@@ -3,6 +3,7 @@ package tela;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -61,7 +62,8 @@ public class TelaInicio extends JFrame  {
 		btnReady = new JButton("Start");
 		btnReady.setBounds(300, 300, 100, 50);
 		
-		//Localizar as imagens dos gatos
+
+	//Localizar as imagens dos gatos
 		cat1 = new ImageIcon(getClass().getResource("/resources/gato1.png"));		
 		cat2 = new ImageIcon(getClass().getResource("/resources/gato2.png"));
 		cat3 = new ImageIcon(getClass().getResource("/resources/gato3.png"));
@@ -104,7 +106,8 @@ public class TelaInicio extends JFrame  {
 		painel1.add(lcat4);
 		//ESSE BOTAO E DO Cliente
 		btnGato6.addActionListener(new acaoCliente());
-		//ESSE BOTAO E DO Servidor
+
+	//ESSE BOTAO E DO Servidor
 		btnGato5.addActionListener(new acaoServidor());
 		
 	}
@@ -117,64 +120,56 @@ public class TelaInicio extends JFrame  {
 		ti.setVisible(true);
 		ti.setFocusable(true);
 		ti.setFocusTraversalKeysEnabled(false);
+		ti.setLocationRelativeTo(null);//Qaundo abrir a janela, vai estar no centro
 		
 	}
-	//Acao para o botao servidor
-	public class acaoServidor implements ActionListener{
-	@Override
 	
+	public class acaoServidor implements ActionListener{
+	@SuppressWarnings("static-access")
+	@Override
 		public void actionPerformed(ActionEvent arg0) {
-		
 			ServerSocket serverSocket = null;
 			try {
-				serverSocket = new ServerSocket(17220);//troquei, estava dando erro na porta
+				serverSocket = new ServerSocket(12345);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			serverSocket.getInetAddress();//Pegar o endereco do servidor
+			serverSocket.getInetAddress();
 			Servidor srv = null;
 			try {
 				srv = new Servidor(new Socket(serverSocket.getInetAddress(),serverSocket.getLocalPort()));
-	
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			
-			JLabel texto = new JLabel("Digite o IP nos clientes");//Na tela solicitando
-			painel1.remove(btnGato6);//Botao do cliente
-			painel1.remove(btnGato5);//Botao do servidor
-			ipServidor.setBounds(100, 325, 200, 25); //espaco para escrever o ip
+			JLabel texto = new JLabel("Digite o IP nos clientes");
+			painel1.remove(btnGato6);
+			painel1.remove(btnGato5);
+			ipServidor.setBounds(100, 325, 200, 25);
 			
-			btnGato6.setBounds(400, 300, 100, 50);//Muda de lugar o botao do cliente
-			ipServidor.setText(srv.getIp().toString());//recebe o ip em char
-			ipServidor.setEditable(false); //Não deixa mais editar o ip
+			btnGato6.setBounds(400, 300, 100, 50);
+			ipServidor.setText(srv.getIp().toString());
+			ipServidor.setEditable(false);
 			texto.setBounds(100, 300, 300, 25);
 			painel1.add(ipServidor);
-			painel1.add(btnReady);//Botão start ainda sem ação
+			painel1.add(btnReady);
 			painel1.add(texto);
 			painel1.repaint();
-			
-			
-			/*JLabel aviso = new JLabel("Escolha o seu personagem");//Na tela solicitando
-			aviso.setBounds(100, 325, 200, 25);
-			painel1.add(aviso);
-			painel1.repaint();*/
-			
-			
-			
 			
 		}
 		
 	
 	}
-	//acao para o botao cliente
+
 	public class acaoCliente implements ActionListener,IControles{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			JLabel texto = new JLabel("Digite o IP e pressione Enter"); 
-			painel1.remove(btnGato5);//remove o botao servidor
+			
+
+			JLabel texto = new JLabel("Digite o IP e pressione Enter");
+			painel1.remove(btnGato5);
+
 			
 			ipServidor.setBounds(100, 325, 200, 25);
 			ipServidor.addKeyListener(this);//escultar o que é digitado
@@ -190,15 +185,19 @@ public class TelaInicio extends JFrame  {
 		}
 		//Implementa as acoes de escultar o que está sendo digitado
 		int i= 0;
+		@SuppressWarnings("static-access")
 		@Override
 		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
+	
 			System.out.println(e.getKeyChar());	
 			if(e.getKeyCode()==e.VK_ENTER) {
 				Cliente cl = new Cliente(ipServidor.getText(), 17220);
 				System.out.println(ipServidor.getText());
 				cl.start();
 				cl.run();
+
+
+
 //				if(cl.getState()) {
 //					System.out.println("esta conecÃ§Ã£o funfa Ã© tem o id ="+ cl.getId());
 //					ipServidor.setEditable(false);
@@ -213,9 +212,10 @@ public class TelaInicio extends JFrame  {
 			
 		}
 
+		@SuppressWarnings("static-access")
 		@Override
 		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
+			
 			if(e.getKeyCode()==e.VK_ENTER) {
 			}
 		}

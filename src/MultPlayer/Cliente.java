@@ -29,7 +29,9 @@ public class Cliente extends Thread
       DataOutputStream out = new DataOutputStream(socket.getOutputStream());
       int i = 561;
       out.writeInt(i); 
-      out.flush(); //Forca o envio
+
+      out.flush(); //Força o envio
+
       System.out.println(socket.isClosed());
      // out.writeDouble(valor); 
       out.flush();
@@ -45,7 +47,8 @@ public class Cliente extends Thread
   	public static void main(String [] args)
      {
         //Cria o cliente para se conectar ao servidor no IP 127.0.0.1 e porta 12345
-        Cliente cliente = new Cliente("192.168.1.5", 17220);
+
+        Cliente cliente = new Cliente("127.0.0.1", 12345);
 
         cliente.start(); //Coloca a thread do cliente para ser executada
      }
