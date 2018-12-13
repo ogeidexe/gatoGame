@@ -37,7 +37,6 @@ import javax.swing.JTextField;
 import MultPlayer.Cliente;
 import MultPlayer.Servidor;
 import interfaces.IControles;
-import jdk.internal.dynalink.beans.StaticClass;
 //implements IControles
 public class TelaInicio extends JFrame  {
 	JButton btnGato1;
@@ -264,4 +263,3 @@ public class TelaInicio extends JFrame  {
 	}
 }
 	
-

@@ -106,5 +106,4 @@ public class Cliente  extends Thread
         //cliente.conectar(); //Coloca a thread do cliente para ser executada
         //cliente.escutar();
      }
-  }
-   
+}
