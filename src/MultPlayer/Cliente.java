@@ -12,9 +12,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.time.chrono.IsoChronology;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import tela.TelaInicio;
 

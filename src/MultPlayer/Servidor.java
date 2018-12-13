@@ -88,15 +88,20 @@ public class Servidor extends Thread {
 
 		try {
 
-			String msg;
+			String msg  = "";
 			OutputStream ou = this.con.getOutputStream();
 			Writer ouw = new OutputStreamWriter(ou);
 			BufferedWriter bfw = new BufferedWriter(ouw);
 			//chama metodo com modificador synchronized para garantir acesso exclusivo
 			this.addCliente(bfw);
-			msg = bfr.readLine();
+			//msg = bfr.readLine();
 			while (!"Sair".equalsIgnoreCase(msg) && msg != null) {
 				msg = bfr.readLine();
+				if(msg.equals("Gato 1")) {
+					System.out.println("Mandando Mesagen de Inicio");
+						
+						sendToAll("START");
+				}
 				sendToAll(msg);
 				
 				//System.out.println(msg);
@@ -128,7 +133,6 @@ public class Servidor extends Thread {
 	
 	public void sendToAll( String msg) throws IOException {
 		BufferedWriter bwS, bwP = null;
-
 		for (BufferedWriter bw : clientes) {
 			bwS =  bw;
 				try{

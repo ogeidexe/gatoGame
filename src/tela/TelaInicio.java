@@ -1,42 +1,23 @@
 package tela;
 
-import java.awt.Dimension;
-import java.awt.Event;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.TexturePaint;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.BufferedWriter;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-
 import MultPlayer.Cliente;
 import MultPlayer.Servidor;
 import interfaces.IControles;
+import tela.AmbienteJogo;
+
 //implements IControles
 public class TelaInicio extends JFrame  {
 	JButton btnGato1;
@@ -61,7 +42,8 @@ public class TelaInicio extends JFrame  {
 	private JTextField ipServidor = new JTextField();
 	private ArrayList<String> btnUsados = new ArrayList<>();
 	
-
+	AmbienteJogo aj;
+	
 	public TelaInicio() {
 		
 		setTitle("Lobby");
@@ -82,10 +64,14 @@ public class TelaInicio extends JFrame  {
 		btnReady.setBounds(300, 300, 100, 50);
 		
 
-		cat1 = new ImageIcon(getClass().getResource("/resources/gato1.png"));		
+		cat1 = new ImageIcon(getClass().getResource("/resources/gato1.png"));
+		cat1.setImage(cat1.getImage().getScaledInstance(100, 100, 100));
 		cat2 = new ImageIcon(getClass().getResource("/resources/gato2.png"));
+		cat2.setImage(cat2.getImage().getScaledInstance(100, 100, 100));
 		cat3 = new ImageIcon(getClass().getResource("/resources/gato3.png"));
+		cat3.setImage(cat3.getImage().getScaledInstance(100, 100, 100));
 		cat4 = new ImageIcon(getClass().getResource("/resources/gato4.png"));
+		cat4.setImage(cat4.getImage().getScaledInstance(100, 100, 100));
 
 		lcat1 = new JLabel();
 		lcat1.setBounds(100, 50, 100, 100);
@@ -136,10 +122,15 @@ public class TelaInicio extends JFrame  {
 	}
 	
 	public void teste(String str) {
-		
+		String[]  a= {"ola","mundo"};
 		System.out.println("<<"+str+">>");
+		if(str.equals("START")) {
+			 aj =  new AmbienteJogo();
+			 aj.main(a);
+		}
+		else
 		if(str.equals(btnGato1.getText())) 
-			btnGato1.setEnabled(false);
+			//btnGato1.setEnabled(false);
 			btnUsados.add(btnGato1.getText());
 		
 	}
@@ -173,14 +164,11 @@ public class TelaInicio extends JFrame  {
 	}
 	public void personagenDisponivel(JButton btn){
 		btn.setEnabled(true);
-		System.out.println(btnUsados.size());
 		for (String string : btnUsados) {
-			JOptionPane.showMessageDialog(null, (btn.getText().equals(string)));
 			if(btn.getText().equals(string))
 				btn.setEnabled(false);
-			
+				JOptionPane.showMessageDialog(null, (btn.getText().equals(string)));
 		}
-		
 	}
 	public class acaoServidor implements ActionListener{
 

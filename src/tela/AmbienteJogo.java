@@ -3,6 +3,8 @@ package tela;
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import java.awt.Dialog.ModalExclusionType;
+import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.SystemColor;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,13 +25,20 @@ public class AmbienteJogo extends JFrame{
 		setForeground(SystemColor.windowBorder);
 		getContentPane().setBackground(SystemColor.menu);
 		setSize(624,663);
-		setResizable(false);//Não deixar redirecionar
+		setResizable(false);//Nï¿½o deixar redirecionar
 		setLocationRelativeTo(null);//Qaundo abrir a janela, vai estar no centro
 		
 		
 		JLabel lblImagem = new JLabel("");
 		lblImagem.setVerticalAlignment(SwingConstants.TOP);
-		lblImagem.setIcon(new ImageIcon(AmbienteJogo.class.getResource("/resources/Corrida.jpeg")));
+		//lblImagem.setIcon(new ImageIcon(AmbienteJogo.class.getResource("/resources/Corrida.jpeg")));
+		
+		ImageIcon ii;
+		ii =  new ImageIcon(getClass().getResource("/resources/Corrida.jpeg"));
+		ii.setImage(ii.getImage().getScaledInstance(900,600, 800));
+		lblImagem.setIcon(ii);
+		
+		
 		getContentPane().add(lblImagem, BorderLayout.NORTH);
 		
 		JButton btnSair = new JButton("Sair");
@@ -37,7 +46,7 @@ public class AmbienteJogo extends JFrame{
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				//setAlwaysOnTop(true);//deixar a tela de confirmação de sair sempre no topo
+				//setAlwaysOnTop(true);//deixar a tela de confirmaï¿½ï¿½o de sair sempre no topo
 				setLocationRelativeTo(null);//Quando abrir a janela, vai estar no centro
 				if((JOptionPane.showConfirmDialog(null, "Realmente Desesa Sair do Jogo?", "Sair", JOptionPane.YES_NO_OPTION)) 
 						== 
@@ -63,8 +72,9 @@ public class AmbienteJogo extends JFrame{
 
 	public static void main(String arg[]) {
 		AmbienteJogo mm = new AmbienteJogo();
-		//mm.setSize(800,600);
+		mm.setSize(900,600);
 		mm.setVisible(true);
+		
 		
 	}
 }
