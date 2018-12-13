@@ -2,12 +2,15 @@ package teste;
 
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 //A CLASSE GAME HERDA AS FUNCIONALIDADES DE JFRAME
-public class Teste extends JFrame {
+public class Teste extends JFrame implements KeyListener{
 
 	BufferedImage backBuffer;	//ESSE É O NOSSO BUFFER
 	int FPS = 30;				//ESSA É A TAXA DE ATUALIZAÇÃO
@@ -15,11 +18,12 @@ public class Teste extends JFrame {
 	int janelaH = 600;			//ALTURA DA TELA
 	ImageIcon fundo = new ImageIcon(getClass().getResource("/resources/Corrida.jpeg"));
 	ImageIcon gato1 =  new ImageIcon(getClass().getResource("/resources/gato1.png"));
-	int i,j;
+	int g1,g2,g3,g4;
 	sprite gato11 = new sprite(1, 100, 200);
 	sprite gato12 = new sprite(1, 200, 200);
 	sprite gato13 = new sprite(1, 300, 200);
 	sprite gato14 = new sprite(1, 400, 200);
+	
 	//NO NOSSO METODO ATUALIZAR VAMOS CHAMAR OS METODOS
 	//QUE SERÃO EXECUTADOS O TEMPO INTEIRO...
 	public void atualizar()  {
@@ -33,7 +37,7 @@ public class Teste extends JFrame {
 		Graphics bbg = backBuffer.getGraphics();//COM bbg IREMOS DESENHAR NO NOSSO BUFFER
 		fundo.setImage(fundo.getImage().getScaledInstance(800, 600, 100));
 		bbg.drawImage(fundo.getImage(),0,0, this);
-		
+		bbg.drawImage(gato1.getImage(), g1, 100, this);
 		
 		
 		//bbg.drawImage(gato11.cenas[gato11.cena].getImage(), gato11.altura, gato11.largura, this);
@@ -54,6 +58,11 @@ public class Teste extends JFrame {
 		setVisible(true);//MUDANDO A VISIBILIDADE DO frame PARA TRUE, ASSIM ELE APARECERÁ
 		backBuffer = new BufferedImage(janelaW, janelaH, BufferedImage.TYPE_INT_RGB);//INICIADO O NOSSO BUFFER DE IMAGEM
 		fundo.setImage(fundo.getImage().getScaledInstance(800, 600, 100));
+		gato1.setImage(gato1.getImage().getScaledInstance(100, 100, 10));
+		g1 = 10;
+		g2 = 10;
+		g3 = 10;
+		g4 = 10;
 		//gato11.cenas[0] = new ImageIcon(getClass().getResource("resources/gato1.png"));
 		//sprite gato1 = new sprite(1, x, y)
 	}
@@ -77,4 +86,24 @@ public class Teste extends JFrame {
 		game.run();//CHAMAMOS O METODO RUN()
 	}
 	//-----------------------------------------------------------------------------
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getKeyCode()==e.VK_ENTER) {
+			
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }// FIM DO CÓDIGO FONTE

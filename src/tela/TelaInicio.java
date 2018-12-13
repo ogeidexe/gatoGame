@@ -238,6 +238,33 @@ public class TelaInicio extends JFrame  {
 			
 		}
 	}
+	public class acaoConectar implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			try {
+				cl = new Cliente(ipServidor.getText(), 12345,TelaInicio.this);
+				cl.start();
+				
+			} catch (UnknownHostException e2) {
+				e2.printStackTrace();
+			} catch (IOException e2) {
+				e2.printStackTrace();
+			}
+			if(!cl.isInterrupted()) {
+				player = cl;
+				JOptionPane.showMessageDialog(null, "Conectado", "Informação",JOptionPane.INFORMATION_MESSAGE);
+				ipServidor.setEditable(false);
+				ipServidor.setEnabled(false);
+				
+							
+			}else {
+				JOptionPane.showMessageDialog(null, "Não Conectado \n Verifique o ip "
+						+ "\n Verifique se o servidor esta ativo", "Informação",JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		
+	}
 	public class acaoCliente implements ActionListener,IControles{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -254,7 +281,9 @@ public class TelaInicio extends JFrame  {
 			painel1.add(ipServidor);
 			painel1.add(texto);
 			painel1.repaint();
+			btnGato6.addActionListener(new acaoConectar());
 		}
+		
 		@Override
 		public void keyPressed(KeyEvent e) {
 			if(e.getKeyCode()==e.VK_ENTER) {
