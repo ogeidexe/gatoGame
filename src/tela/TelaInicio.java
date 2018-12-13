@@ -116,6 +116,9 @@ public class TelaInicio extends JFrame  {
 		btnGato5.setEnabled(false);
 		//Botão de escolha do primeiro gato 
 		btnGato1.addActionListener(new acaoBtn1());
+		btnGato2.addActionListener(new acaoBtn2());
+		btnGato3.addActionListener(new acaoBtn3());
+		btnGato4.addActionListener(new acaoBtn4());
 		
 	
 	}
@@ -175,7 +178,37 @@ public class TelaInicio extends JFrame  {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			try {
-				cl.enviarMensagem(btnGato1.getText());
+				cl.enviarMensagem(btnGato2.getText());
+				//btnUsados.add(btnGato1.getText());
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	public class acaoBtn3 implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			try {
+				cl.enviarMensagem(btnGato3.getText());
+				//btnUsados.add(btnGato1.getText());
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	public class acaoBtn4 implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			try {
+				cl.enviarMensagem(btnGato4.getText());
 				//btnUsados.add(btnGato1.getText());
 				
 			} catch (IOException e) {

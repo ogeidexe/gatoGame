@@ -115,7 +115,7 @@ public class Servidor extends Thread {
 //								
 //								//sendToAll("START");
 //						}
-//						sendToAll(msg);
+						sendToAll(msg);
 //						
 //						//System.out.println(msg);
 					

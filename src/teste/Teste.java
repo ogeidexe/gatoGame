@@ -11,15 +11,19 @@ public class Teste extends JFrame {
 
 	BufferedImage backBuffer;	//ESSE É O NOSSO BUFFER
 	int FPS = 30;				//ESSA É A TAXA DE ATUALIZAÇÃO
-	int janelaW = 500;			//LARGURA DA TELA
-	int janelaH = 500;			//ALTURA DA TELA
+	int janelaW = 800;			//LARGURA DA TELA
+	int janelaH = 600;			//ALTURA DA TELA
 	ImageIcon fundo = new ImageIcon(getClass().getResource("/resources/Corrida.jpeg"));
 	ImageIcon gato1 =  new ImageIcon(getClass().getResource("/resources/gato1.png"));
-	
+	int i,j;
+	sprite gato11 = new sprite(1, 100, 200);
+	sprite gato12 = new sprite(1, 200, 200);
+	sprite gato13 = new sprite(1, 300, 200);
+	sprite gato14 = new sprite(1, 400, 200);
 	//NO NOSSO METODO ATUALIZAR VAMOS CHAMAR OS METODOS
 	//QUE SERÃO EXECUTADOS O TEMPO INTEIRO...
-	public void atualizar() {
-
+	public void atualizar()  {
+		
 	}
 
 	//NESSE MÉTODO VAMOS IREMOS DESENHAR
@@ -27,11 +31,14 @@ public class Teste extends JFrame {
 	public void desenharGraficos() {
 		Graphics g = getGraphics();//COM g IREMOS DESENHAR O TUDO QUE ESTÁ NO BUFFER NA TELA
 		Graphics bbg = backBuffer.getGraphics();//COM bbg IREMOS DESENHAR NO NOSSO BUFFER
+		fundo.setImage(fundo.getImage().getScaledInstance(800, 600, 100));
 		bbg.drawImage(fundo.getImage(),0,0, this);
-		gato1.setImage(gato1.getImage().getScaledInstance(-200, 100, 0));
-		bbg.drawImage(gato1.getImage(), 30, 100, this);
 		
 		
+		
+		//bbg.drawImage(gato11.cenas[gato11.cena].getImage(), gato11.altura, gato11.largura, this);
+		
+		//gato11.animarMaisLento();
 		//AQUI ESTAMOS DESENHANDO O BUFFER NA TELA,
 		//NAS COORDENADAS X:0 e Y:0
 		g.drawImage(backBuffer, 0, 0, this);
@@ -46,6 +53,9 @@ public class Teste extends JFrame {
 		setLayout(null);//COM ISSO PODEREMOS DEFINIAR COORDENADA E DIMESÕES DE ELMENTOS DE FORMULARIO NA TELA
 		setVisible(true);//MUDANDO A VISIBILIDADE DO frame PARA TRUE, ASSIM ELE APARECERÁ
 		backBuffer = new BufferedImage(janelaW, janelaH, BufferedImage.TYPE_INT_RGB);//INICIADO O NOSSO BUFFER DE IMAGEM
+		fundo.setImage(fundo.getImage().getScaledInstance(800, 600, 100));
+		//gato11.cenas[0] = new ImageIcon(getClass().getResource("resources/gato1.png"));
+		//sprite gato1 = new sprite(1, x, y)
 	}
 	//AQUI É O NOSSO MÉTODO RUN()
 	//NELE TEMOS O NOSSO GAME LOOP (UM LOOP INFINITO)
