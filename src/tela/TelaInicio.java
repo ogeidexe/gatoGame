@@ -18,6 +18,7 @@ import MultPlayer.Servidor;
 import interfaces.IControles;
 import tela.AmbienteJogo;
 
+
 //implements IControles
 public class TelaInicio extends JFrame  {
 	JButton btnGato1;
@@ -40,7 +41,8 @@ public class TelaInicio extends JFrame  {
 	private JLabel lcat4;
 	private JPanel painel1;
 	private JTextField ipServidor = new JTextField();
-	private ArrayList<String> btnUsados = new ArrayList<>();
+	private static ArrayList<String> btnUsados = new ArrayList<>();
+	private Cliente player;
 	
 	AmbienteJogo aj;
 	
@@ -101,10 +103,7 @@ public class TelaInicio extends JFrame  {
 		painel1.add(btnGato5);
 		painel1.add(btnGato6);
 		
-		btnGato1.setEnabled(false);
-		btnGato2.setEnabled(false);
-		btnGato3.setEnabled(false);
-		btnGato4.setEnabled(false);
+		
 		
 		painel1.add(lcat1);
 		painel1.add(lcat2);
@@ -123,17 +122,26 @@ public class TelaInicio extends JFrame  {
 	
 	public void teste(String str) {
 		String[]  a= {"ola","mundo"};
+	
 		System.out.println("<<"+str+">>");
-		if(str.equals("START")) {
-			 aj =  new AmbienteJogo();
+		if(str.equals("START") && aj == null ) {
+			 aj =  new AmbienteJogo(player);
 			 aj.main(a);
+			 
 		}
-		else
-		if(str.equals(btnGato1.getText())) 
-			//btnGato1.setEnabled(false);
-			btnUsados.add(btnGato1.getText());
-		
+		personagenDisponivel(str);
 	}
+	public void personagenDisponivel(String string){
+			if(btnGato1.getText().equals(string))
+				btnGato1.setEnabled(false);
+			if(btnGato2.getText().equals(string))
+				btnGato2.setEnabled(false);
+			if(btnGato3.getText().equals(string))
+				btnGato3.setEnabled(false);
+			if(btnGato4.getText().equals(string))
+				btnGato4.setEnabled(false);
+	}
+	
 	
 	
 	public static void main(String[] args) {
@@ -162,13 +170,20 @@ public class TelaInicio extends JFrame  {
 		}
 		
 	}
-	public void personagenDisponivel(JButton btn){
-		btn.setEnabled(true);
-		for (String string : btnUsados) {
-			if(btn.getText().equals(string))
-				btn.setEnabled(false);
-				JOptionPane.showMessageDialog(null, (btn.getText().equals(string)));
+	public class acaoBtn2 implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			try {
+				cl.enviarMensagem(btnGato1.getText());
+				//btnUsados.add(btnGato1.getText());
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		
 	}
 	public class acaoServidor implements ActionListener{
 
@@ -193,7 +208,6 @@ public class TelaInicio extends JFrame  {
 	public class acaoCliente implements ActionListener,IControles{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
 			JLabel texto = new JLabel("Digite o IP e pressione Enter ou OK");
 			painel1.remove(btnGato5);
 			
@@ -221,13 +235,10 @@ public class TelaInicio extends JFrame  {
 					e2.printStackTrace();
 				}
 				if(!cl.isInterrupted()) {
+					player = cl;
 					JOptionPane.showMessageDialog(null, "Conectado", "Informação",JOptionPane.INFORMATION_MESSAGE);
 					ipServidor.setEditable(false);
 					ipServidor.setEnabled(false);
-					personagenDisponivel(btnGato1);
-					personagenDisponivel(btnGato2);
-					personagenDisponivel(btnGato3);
-					personagenDisponivel(btnGato4);
 					
 								
 				}else {

@@ -41,7 +41,7 @@ public class Cliente  extends Thread
 		ou = socket.getOutputStream();
 		ouw = new OutputStreamWriter(ou);
 		bfw = new BufferedWriter(ouw);
-		bfw.write( "ola funcionou"+"\r\n");
+		bfw.write( "IamNew"+"\r\n");
 		bfw.flush();
   }
   	//Verifica se o cliente esta conectado ao servidor
@@ -76,13 +76,10 @@ public class Cliente  extends Thread
 		String msg = null;
 
 		while (!"Sair".equalsIgnoreCase(msg))
-
 			if (bfr.ready()) {
 				msg = bfr.readLine();
 				ti.teste(msg);
-				if(msg.equals("CONECTED\r\n"))
-					isConectado = true;
-					//texto.append("Servidor caiu! \r\n");
+				//texto.append("Servidor caiu! \r\n");
 			}
 	}
 	

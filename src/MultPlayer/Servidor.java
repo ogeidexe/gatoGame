@@ -31,7 +31,8 @@ public class Servidor extends Thread {
 	private OutputStream out;
 	private InputStreamReader inr;
 	private BufferedReader bfr;
-
+	private ArrayList<String> sinc = new ArrayList<>();
+	
 	/**
 	 * M�todo construtor
 	 * 
@@ -84,43 +85,66 @@ public class Servidor extends Thread {
 	/**
 	 * Método run
 	 **/
+	
 	public void run() {
 
 		try {
-
-			String msg  = "";
-			OutputStream ou = this.con.getOutputStream();
-			Writer ouw = new OutputStreamWriter(ou);
-			BufferedWriter bfw = new BufferedWriter(ouw);
-			//chama metodo com modificador synchronized para garantir acesso exclusivo
-			this.addCliente(bfw);
-			//msg = bfr.readLine();
-			while (!"Sair".equalsIgnoreCase(msg) && msg != null) {
-				msg = bfr.readLine();
-				if(msg.equals("Gato 1")) {
-					System.out.println("Mandando Mesagen de Inicio");
+				String msg  = null;
+				OutputStream ou = this.con.getOutputStream();
+				Writer ouw = new OutputStreamWriter(ou);
+				BufferedWriter bfw = new BufferedWriter(ouw);
+				//chama metodo com modificador synchronized para garantir acesso exclusivo
+				this.addCliente(bfw);
+				//msg = bfr.readLine();  && msg != null
+				while (!"Sair".equalsIgnoreCase(msg)) {
+					msg = bfr.readLine();
+					System.out.println("++"+msg+"++");
+					System.out.println(sinc.toString());
+					if(!msg.equals(""))
+						sinc.add(msg);
+			
+					//if(msg.equals("IamNew")) {
+						sincronizar(bfw);
+						System.out.println("cliente novo");
+					//}
 						
-						sendToAll("START");
-				}
-				sendToAll(msg);
-				
-				//System.out.println(msg);
+					//else
+						//sendToAll(msg);
+//						if(msg.equals("Gato 1")) {
+//							System.out.println("Mandando Mesagen de Inicio");
+//								
+//								//sendToAll("START");
+//						}
+//						sendToAll(msg);
+//						
+//						//System.out.println(msg);
+					
 			}
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	/**
-	 *Método para enviar botes ja usados  para tela inical 
+	 *
 	 * 
 	 * 
 	 * 
 	 */
-	public void BtnUsados(){
-		
-	}
+	public void sincronizar(BufferedWriter bfw){
+		BufferedWriter bwS, bwP = null;
+		bwS =  bfw;
 	
+		for (String string : sinc) {
+					try {
+						bfw.write(string+ "\r\n");
+						bfw.flush();
+					} catch (IOException e) {
+						bwP=bwS;
+					}
+		}
+	}
 	/**
 	 * M�todo usado para enviar mensagem para todos os clients
 	 * 
