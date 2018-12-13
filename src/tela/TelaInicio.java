@@ -41,7 +41,7 @@ public class TelaInicio extends JFrame  {
 	private JLabel lcat4;
 	private JPanel painel1;
 	private JTextField ipServidor = new JTextField();
-	private static ArrayList<String> btnUsados = new ArrayList<>();
+	
 	private Cliente player;
 	
 	AmbienteJogo aj;
@@ -116,10 +116,14 @@ public class TelaInicio extends JFrame  {
 		btnGato5.setEnabled(false);
 		//Botão de escolha do primeiro gato 
 		btnGato1.addActionListener(new acaoBtn1());
+		//btnGato1.addActionListener(new acaoBtn2());
+		//btnGato1.addActionListener(new acaoBtn3());
+		//btnGato1.addActionListener(new acaoBtn4());
 		
 	
 	}
 	
+	@SuppressWarnings("static-access")
 	public void teste(String str) {
 		String[]  a= {"ola","mundo"};
 	
@@ -133,12 +137,16 @@ public class TelaInicio extends JFrame  {
 	}
 	public void personagenDisponivel(String string){
 			if(btnGato1.getText().equals(string))
+				System.out.println("Bot�o 1" + string + btnGato1.getText());
 				btnGato1.setEnabled(false);
 			if(btnGato2.getText().equals(string))
+				System.out.println("Bot�o 2" + string + btnGato2.getText());
 				btnGato2.setEnabled(false);
 			if(btnGato3.getText().equals(string))
+				System.out.println("Bot�o 3" + string + btnGato3.getText());
 				btnGato3.setEnabled(false);
 			if(btnGato4.getText().equals(string))
+				System.out.println("Bot�o 4" + string + btnGato4.getText());
 				btnGato4.setEnabled(false);
 	}
 	
@@ -161,7 +169,6 @@ public class TelaInicio extends JFrame  {
 		public void actionPerformed(ActionEvent arg0) {
 			try {
 				cl.enviarMensagem(btnGato1.getText());
-				btnUsados.add(btnGato1.getText());
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -175,8 +182,8 @@ public class TelaInicio extends JFrame  {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			try {
-				cl.enviarMensagem(btnGato1.getText());
-				//btnUsados.add(btnGato1.getText());
+				cl.enviarMensagem(btnGato2.getText());
+				
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -185,8 +192,65 @@ public class TelaInicio extends JFrame  {
 		}
 		
 	}
+	public class acaoBtn3 implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			try {
+				cl.enviarMensagem(btnGato3.getText());
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	public class acaoBtn4 implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			try {
+				cl.enviarMensagem(btnGato4.getText());
+			
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	public class acaoConectar implements ActionListener{
+			public void actionPerformed(ActionEvent arg0) {
+					try {
+						cl = new Cliente(ipServidor.getText(), 12345,TelaInicio.this);
+						cl.start();
+						
+					} catch (UnknownHostException e2) {
+						e2.printStackTrace();
+					} catch (IOException e2) {
+						e2.printStackTrace();
+					}
+					if(!cl.isInterrupted()) {
+						player = cl;
+						JOptionPane.showMessageDialog(null, "Conectado", "Informação",JOptionPane.INFORMATION_MESSAGE);
+						ipServidor.setEditable(false);
+						ipServidor.setEnabled(false);
+						
+									
+					}else {
+						JOptionPane.showMessageDialog(null, "Não Conectado \n Verifique o ip "
+								+ "\n Verifique se o servidor esta ativo", "Informação",JOptionPane.ERROR_MESSAGE);
+					}
+						
+			}
+	}
+	
+	
 	public class acaoServidor implements ActionListener{
 
+		@SuppressWarnings("static-access")
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			Servidor srv = null;
@@ -199,32 +263,31 @@ public class TelaInicio extends JFrame  {
 			ipServidor.setEditable(false);
 			texto.setBounds(100, 300, 300, 25);
 			painel1.add(ipServidor);
-			painel1.add(btnReady);
 			painel1.add(texto);
 			painel1.repaint();
 			
 		}
 	}
 	public class acaoCliente implements ActionListener,IControles{
-		@Override
 		public void actionPerformed(ActionEvent e) {
-			JLabel texto = new JLabel("Digite o IP e pressione Enter ou OK");
+			JLabel texto = new JLabel("Digite o IP");
 			painel1.remove(btnGato5);
 			
 			ipServidor.setBounds(100, 325, 200, 25);
 			ipServidor.addKeyListener(this);
 			btnGato6.setBounds(400, 300, 125, 50);
 			btnGato6.setText("CONECTAR");
-			
+
 			texto.setBounds(100, 300, 300, 25);
 			ipServidor.setText(Servidor.getIp());
 			painel1.add(ipServidor);
 			painel1.add(texto);
 			painel1.repaint();
+			btnGato6.addActionListener(new acaoConectar());
+			
 		}
-		@Override
 		public void keyPressed(KeyEvent e) {
-			if(e.getKeyCode()==e.VK_ENTER) {
+			/*if(e.getKeyCode()==e.VK_ENTER) {
 				try {
 					cl = new Cliente(ipServidor.getText(), 12345,TelaInicio.this);
 					cl.start();
@@ -246,16 +309,14 @@ public class TelaInicio extends JFrame  {
 							+ "\n Verifique se o servidor esta ativo", "Informação",JOptionPane.ERROR_MESSAGE);
 				}
 					
-			}
+			}*/
 		}
 
-		@Override
 		public void keyReleased(KeyEvent e) {
 			// TODO Auto-generated method stub
 			
 		}
 
-		@Override
 		public void keyTyped(KeyEvent e) {
 		}
 	
