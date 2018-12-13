@@ -1,53 +1,110 @@
 package MultPlayer;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.net.Socket;
+import java.net.UnknownHostException;
+import java.time.chrono.IsoChronology;
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Cliente extends Thread
+import tela.TelaInicio;
+
+public class Cliente  extends Thread  
 {
   private String ip; //O IP do servidor
   private int porta; //A porta de comunicação que será utilizada
-
-  public Cliente(String ip, int porta)
-  {
-    this.ip = ip;
-    this.porta = porta;
-  }
-
-  @Override
-  public void run()
-  {
-    try
-    {
-            
-      Socket socket = new Socket(ip, porta); //Conecta-se ao servidor
-      //Obtém os streams de entrada e saída
-      System.out.println("CONECTOU"+socket.isConnected());
-      DataInputStream in = new DataInputStream(socket.getInputStream());
-      DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-      int i = 561;
-      out.writeInt(i); 
-      out.flush(); //Força o envio
-      System.out.println(socket.isClosed());
-     // out.writeDouble(valor); 
-      out.flush();
- 
-    }
-    catch (Exception ex)
-    {
-        System.err.println("Erro: " + ex.getMessage());
-     
-      }
-    }
+  private boolean isConectado = false;
+  Socket socket;
+  ArrayList<Integer> listaD;
+  DataInputStream in;
+  DataOutputStream out;
+  OutputStream ou;
+  private Writer ouw;
+  private BufferedWriter bfw;
+  private TelaInicio ti;
   
-  	public static void main(String [] args)
+  public Cliente(String ip,Integer porta,TelaInicio ti) throws UnknownHostException, IOException {
+	  this.porta =  porta;
+	  this.ip = ip;
+	  this.ti = ti;
+  }
+  //
+  public void conectar() throws IOException {
+	    socket = new Socket(ip,porta);
+		ou = socket.getOutputStream();
+		ouw = new OutputStreamWriter(ou);
+		bfw = new BufferedWriter(ouw);
+		bfw.write( "ola funcionou"+"\r\n");
+		bfw.flush();
+  }
+  	//Verifica se o cliente esta conectado ao servidor
+  	public boolean isConectado() {
+  		return this.isConectado;
+  	}
+  	/***
+	 * M�todo usado para enviar mensagem para o server socket
+	 * 
+	 * @param msg
+	 *            do tipo String
+	 * @throws IOException
+	 *             retorna IO Exception caso d� algum erro.
+	 */
+	public void enviarMensagem(String msg) throws IOException {
+		if (msg.equals("140")) {
+			System.exit(0);
+		} else {			
+			bfw.write(msg+"\r\n");
+			bfw.flush();
+		}
+		bfw.flush();
+	}
+
+  	
+  	//Escuta Alterações
+ 
+	public void escutar() throws IOException {
+		InputStream in = socket.getInputStream();
+		InputStreamReader inr = new InputStreamReader(in);
+		BufferedReader bfr = new BufferedReader(inr);
+		String msg = null;
+
+		while (!"Sair".equalsIgnoreCase(msg))
+
+			if (bfr.ready()) {
+				msg = bfr.readLine();
+				ti.teste(msg);
+				if(msg.equals("CONECTED\r\n"))
+					isConectado = true;
+					//texto.append("Servidor caiu! \r\n");
+			}
+	}
+	
+  	@Override
+	public void run() {
+		try {
+			conectar();
+			escutar();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+  	
+	}
+	public static void main(String [] args) throws IOException
      {
         //Cria o cliente para se conectar ao servidor no IP 127.0.0.1 e porta 12345
-        Cliente cliente = new Cliente("127.0.0.1", 12345);
-
-        cliente.start(); //Coloca a thread do cliente para ser executada
+        //Cliente cliente = new Cliente("127.0.0.1",1234,);
+        //cliente.conectar(); //Coloca a thread do cliente para ser executada
+        //cliente.escutar();
      }
   }
    

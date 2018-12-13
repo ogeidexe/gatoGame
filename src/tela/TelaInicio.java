@@ -11,12 +11,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -27,9 +33,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+
 import MultPlayer.Cliente;
 import MultPlayer.Servidor;
 import interfaces.IControles;
+import jdk.internal.dynalink.beans.StaticClass;
 //implements IControles
 public class TelaInicio extends JFrame  {
 	JButton btnGato1;
@@ -47,20 +55,25 @@ public class TelaInicio extends JFrame  {
 	JLabel lcat1;
 	JLabel lcat2;
 	JLabel lcat3;
-	JLabel lcat4;
-	JPanel painel1;
-	JTextField ipServidor = new JTextField();
+	
+	private Cliente cl;
+	private JLabel lcat4;
+	private JPanel painel1;
+	private JTextField ipServidor = new JTextField();
+	private ArrayList<String> btnUsados = new ArrayList<>();
+	
 
 	public TelaInicio() {
-		painel1 = new JPanel(null);
 		
-		btnGato1 = new JButton("Escolher");
+		setTitle("Lobby");
+		painel1 = new JPanel(null);
+		btnGato1 = new JButton("Gato 1");
 		btnGato1.setBounds(100, 200, 100, 50);
-		btnGato2 = new JButton("Escolher");
+		btnGato2 = new JButton("Gato 2");
 		btnGato2.setBounds(250, 200, 100, 50);
-		btnGato3 = new JButton("Escolher");
+		btnGato3 = new JButton("Gato 3");
 		btnGato3.setBounds(400, 200, 100, 50);
-		btnGato4 = new JButton("Escolher");
+		btnGato4 = new JButton("Gato 4");
 		btnGato4.setBounds(550, 200, 100, 50);
 		btnGato5 = new JButton("Servidor");
 		btnGato5.setBounds(100, 300, 100, 50);
@@ -102,6 +115,12 @@ public class TelaInicio extends JFrame  {
 		painel1.add(btnGato4);
 		painel1.add(btnGato5);
 		painel1.add(btnGato6);
+		
+		btnGato1.setEnabled(false);
+		btnGato2.setEnabled(false);
+		btnGato3.setEnabled(false);
+		btnGato4.setEnabled(false);
+		
 		painel1.add(lcat1);
 		painel1.add(lcat2);
 		painel1.add(lcat3);
@@ -110,10 +129,22 @@ public class TelaInicio extends JFrame  {
 		btnGato6.addActionListener(new acaoCliente());
 		//ESSE BOTÃO É DO Servidor
 		btnGato5.addActionListener(new acaoServidor());
-		
+		btnGato5.setEnabled(false);
+		//Botão de escolha do primeiro gato 
+		btnGato1.addActionListener(new acaoBtn1());
 		
 	
 	}
+	
+	public void teste(String str) {
+		
+		System.out.println("<<"+str+">>");
+		if(str.equals(btnGato1.getText())) 
+			btnGato1.setEnabled(false);
+			btnUsados.add(btnGato1.getText());
+		
+	}
+	
 	
 	public static void main(String[] args) {
 		TelaInicio  ti = new TelaInicio();
@@ -123,31 +154,44 @@ public class TelaInicio extends JFrame  {
 		ti.setVisible(true);
 		ti.setFocusable(true);
 		ti.setFocusTraversalKeysEnabled(false);
+		ti.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 	}
-	
-	public class acaoServidor implements ActionListener{
-	@Override
+	public class acaoBtn1 implements ActionListener{
+
+		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			ServerSocket serverSocket = null;
 			try {
-				serverSocket = new ServerSocket(12345);
+				cl.enviarMensagem(btnGato1.getText());
+				btnUsados.add(btnGato1.getText());
+				
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			serverSocket.getInetAddress();
-			Servidor srv = null;
-			try {
-				srv = new Servidor(new Socket(serverSocket.getInetAddress(),serverSocket.getLocalPort()));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		}
+		
+	}
+	public void personagenDisponivel(JButton btn){
+		btn.setEnabled(true);
+		System.out.println(btnUsados.size());
+		for (String string : btnUsados) {
+			JOptionPane.showMessageDialog(null, (btn.getText().equals(string)));
+			if(btn.getText().equals(string))
+				btn.setEnabled(false);
 			
+		}
+		
+	}
+	public class acaoServidor implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			Servidor srv = null;
 			JLabel texto = new JLabel("Digite o IP nos clientes");
 			painel1.remove(btnGato6);
 			painel1.remove(btnGato5);
 			ipServidor.setBounds(100, 325, 200, 25);
-			
 			btnGato6.setBounds(400, 300, 100, 50);
 			ipServidor.setText(srv.getIp().toString());
 			ipServidor.setEditable(false);
@@ -158,43 +202,52 @@ public class TelaInicio extends JFrame  {
 			painel1.repaint();
 			
 		}
-		
-	
 	}
 	public class acaoCliente implements ActionListener,IControles{
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			JLabel texto = new JLabel("Digite o IP e pressione Enter");
+			JLabel texto = new JLabel("Digite o IP e pressione Enter ou OK");
 			painel1.remove(btnGato5);
 			
 			ipServidor.setBounds(100, 325, 200, 25);
 			ipServidor.addKeyListener(this);
+			btnGato6.setBounds(400, 300, 125, 50);
+			btnGato6.setText("CONECTAR");
 			
-			btnGato6.setBounds(400, 300, 100, 50);
-			btnGato6.setText("OK");
 			texto.setBounds(100, 300, 300, 25);
+			ipServidor.setText(Servidor.getIp());
 			painel1.add(ipServidor);
 			painel1.add(texto);
 			painel1.repaint();
-			
-			
 		}
-		int i= 0;
 		@Override
 		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
-			System.out.println(e.getKeyChar());	
 			if(e.getKeyCode()==e.VK_ENTER) {
-				Cliente cl = new Cliente(ipServidor.getText(), 12345);
-				System.out.println(ipServidor.getText());
-				cl.start();
-//				if(cl.getState()) {
-//					System.out.println("esta conecção funfa é tem o id ="+ cl.getId());
-//					ipServidor.setEditable(false);
-//					JOptionPane.showMessageDialog(null, "Conectado a "+ipServidor.getText(), "STATUS", JOptionPane.INFORMATION_MESSAGE);
-//				}
+				try {
+					cl = new Cliente(ipServidor.getText(), 12345,TelaInicio.this);
+					cl.start();
+					
+				} catch (UnknownHostException e2) {
+					e2.printStackTrace();
+				} catch (IOException e2) {
+					e2.printStackTrace();
+				}
+				if(!cl.isInterrupted()) {
+					JOptionPane.showMessageDialog(null, "Conectado", "Informação",JOptionPane.INFORMATION_MESSAGE);
+					ipServidor.setEditable(false);
+					ipServidor.setEnabled(false);
+					personagenDisponivel(btnGato1);
+					personagenDisponivel(btnGato2);
+					personagenDisponivel(btnGato3);
+					personagenDisponivel(btnGato4);
+					
+								
+				}else {
+					JOptionPane.showMessageDialog(null, "Não Conectado \n Verifique o ip "
+							+ "\n Verifique se o servidor esta ativo", "Informação",JOptionPane.ERROR_MESSAGE);
+				}
+					
 			}
 		}
 
@@ -206,9 +259,6 @@ public class TelaInicio extends JFrame  {
 
 		@Override
 		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
-			if(e.getKeyCode()==e.VK_ENTER) {
-			}
 		}
 	
 	}
