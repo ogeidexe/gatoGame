@@ -17,6 +17,7 @@ import MultPlayer.Cliente;
 import MultPlayer.Servidor;
 import interfaces.IControles;
 import tela.AmbienteJogo;
+import teste.Teste;
 
 
 //implements IControles
@@ -159,13 +160,16 @@ public class TelaInicio extends JFrame  {
 		
 	}
 	public class acaoBtn1 implements ActionListener{
-
+		String[] ola = null;
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			try {
 				cl.enviarMensagem(btnGato1.getText());
 				btnUsados.add(btnGato1.getText());
-				
+				Teste t = new Teste();
+				t.setAtualClient(cl);
+				t.main(ola);
+				System.out.println(cl.getMYID());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

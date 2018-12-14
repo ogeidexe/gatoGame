@@ -2,15 +2,21 @@ package teste;
 
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import MultPlayer.Cliente;
 //A CLASSE GAME HERDA AS FUNCIONALIDADES DE JFRAME
-public class Teste extends JFrame implements KeyListener{
+public class Teste extends JFrame implements KeyListener,ActionListener{
 
 	BufferedImage backBuffer;	//ESSE É O NOSSO BUFFER
 	int FPS = 30;				//ESSA É A TAXA DE ATUALIZAÇÃO
@@ -18,18 +24,20 @@ public class Teste extends JFrame implements KeyListener{
 	int janelaH = 600;			//ALTURA DA TELA
 	ImageIcon fundo = new ImageIcon(getClass().getResource("/resources/Corrida.jpeg"));
 	ImageIcon gato1 =  new ImageIcon(getClass().getResource("/resources/gato1.png"));
-	int g1,g2,g3,g4;
-	sprite gato11 = new sprite(1, 100, 200);
-	sprite gato12 = new sprite(1, 200, 200);
-	sprite gato13 = new sprite(1, 300, 200);
-	sprite gato14 = new sprite(1, 400, 200);
+	Integer g1,g2,g3,g4;
+	Cliente cliente;
 	
 	//NO NOSSO METODO ATUALIZAR VAMOS CHAMAR OS METODOS
 	//QUE SERÃO EXECUTADOS O TEMPO INTEIRO...
 	public void atualizar()  {
-		
+		//if(Integer.parseInt(cliente.getmsgAtual())== KeyEvent.VK_ENTER)
+		if(("ESPACE"+cliente.getMYID()).equals(cliente.getmsgAtual()))
+			g1+=5;
 	}
-
+	public void setAtualClient(Cliente player) {
+		this.cliente = player;
+		System.out.println("cliente Instanciado ID:"+cliente.getMYID());
+	}
 	//NESSE MÉTODO VAMOS IREMOS DESENHAR
 	//FORMAS GEOMETRICAS, IMAGENS E TEXTOS NA TELA E ETC...
 	public void desenharGraficos() {
@@ -56,6 +64,11 @@ public class Teste extends JFrame implements KeyListener{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);//QUANDO FECHARMOS O frame A APLICAÇÃO PARA DE EXECUTAR
 		setLayout(null);//COM ISSO PODEREMOS DEFINIAR COORDENADA E DIMESÕES DE ELMENTOS DE FORMULARIO NA TELA
 		setVisible(true);//MUDANDO A VISIBILIDADE DO frame PARA TRUE, ASSIM ELE APARECERÁ
+		setFocusable(true);
+		Teste.this.getContentPane().setFocusable(true);
+		Teste.this.getContentPane().setFocusTraversalKeysEnabled(true);
+		this.addKeyListener(this);
+		setFocusTraversalKeysEnabled(false);
 		backBuffer = new BufferedImage(janelaW, janelaH, BufferedImage.TYPE_INT_RGB);//INICIADO O NOSSO BUFFER DE IMAGEM
 		fundo.setImage(fundo.getImage().getScaledInstance(800, 600, 100));
 		gato1.setImage(gato1.getImage().getScaledInstance(100, 100, 10));
@@ -90,19 +103,32 @@ public class Teste extends JFrame implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getKeyCode()==e.VK_ENTER) {
-			
+		System.out.println(e.getKeyCode());
+		try {
+			cliente.enviarMensagem("ESPACE"+cliente.getMYID());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
+		
 	}
 
+	
 	@Override
-	public void keyReleased(KeyEvent e) {
+	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
 	}

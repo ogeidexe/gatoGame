@@ -29,6 +29,8 @@ public class Cliente  extends Thread
   private Writer ouw;
   private BufferedWriter bfw;
   private TelaInicio ti;
+  public String id;
+  public String msgAtual;
   
   public Cliente(String ip,Integer porta,TelaInicio ti) throws UnknownHostException, IOException {
 	  this.porta =  porta;
@@ -73,16 +75,32 @@ public class Cliente  extends Thread
 		InputStream in = socket.getInputStream();
 		InputStreamReader inr = new InputStreamReader(in);
 		BufferedReader bfr = new BufferedReader(inr);
-		String msg = null;
+		String msg = "DEFAUT";
 
 		while (!"Sair".equalsIgnoreCase(msg))
-			if (bfr.ready()) {
-				msg = bfr.readLine();
-				ti.teste(msg);
-				//texto.append("Servidor caiu! \r\n");
+			if (msg.substring(0,4).equals("MYID")) {
+				setMYID(msg);
+			}else {
+				if (bfr.ready()) {
+					msg = bfr.readLine();
+					ti.teste(msg);
+					setmsgAtual(msg);
+					//texto.append("Servidor caiu! \r\n");
+				}
 			}
 	}
-	
+	public void setmsgAtual(String msg) {
+		this.msgAtual = msg;
+	}
+	public String getmsgAtual() {
+		return msgAtual;
+	}
+	public void setMYID(String id){
+		this.id = id;
+	}
+	public String getMYID() {
+		return this.id;
+	}
   	@Override
 	public void run() {
 		try {

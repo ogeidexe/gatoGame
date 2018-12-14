@@ -95,6 +95,8 @@ public class Servidor extends Thread {
 				BufferedWriter bfw = new BufferedWriter(ouw);
 				//chama metodo com modificador synchronized para garantir acesso exclusivo
 				this.addCliente(bfw);
+				bfw.write("MYID"+clientes.indexOf(bfw)+ "\r\n");
+				bfw.flush();
 				//msg = bfr.readLine();  && msg != null
 				while (!"Sair".equalsIgnoreCase(msg)) {
 					msg = bfr.readLine();
@@ -135,7 +137,12 @@ public class Servidor extends Thread {
 	public void sincronizar(BufferedWriter bfw){
 		BufferedWriter bwS, bwP = null;
 		bwS =  bfw;
-	
+		try {
+			bfw.write("MYID"+clientes.indexOf(bfw)+ "\r\n");
+			bfw.flush();
+		} catch (IOException e) {
+			bwP=bwS;
+		}
 		for (String string : sinc) {
 					try {
 						bfw.write(string+ "\r\n");
