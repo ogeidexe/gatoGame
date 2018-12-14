@@ -15,6 +15,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import tela.TelaInicio;
+import teste.Teste;
 
 public class Cliente  extends Thread  
 {
@@ -29,15 +30,18 @@ public class Cliente  extends Thread
   private Writer ouw;
   private BufferedWriter bfw;
   private TelaInicio ti;
+  private Teste te;
   public String id;
   public String msgAtual;
   
-  public Cliente(String ip,Integer porta,TelaInicio ti) throws UnknownHostException, IOException {
+  public Cliente(String ip,Integer porta,TelaInicio ti,Teste te) throws UnknownHostException, IOException {
 	  this.porta =  porta;
 	  this.ip = ip;
 	  this.ti = ti;
+	  this.te = te;
+	  
   }
-  //
+ 
   public void conectar() throws IOException {
 	    socket = new Socket(ip,porta);
 		ou = socket.getOutputStream();
@@ -84,6 +88,7 @@ public class Cliente  extends Thread
 				if (bfr.ready()) {
 					msg = bfr.readLine();
 					ti.teste(msg);
+					te.setMsgatual(msg);
 					setmsgAtual(msg);
 					//texto.append("Servidor caiu! \r\n");
 				}
@@ -101,7 +106,7 @@ public class Cliente  extends Thread
 	public String getMYID() {
 		return this.id;
 	}
-  	@Override
+	@Override
 	public void run() {
 		try {
 			conectar();

@@ -29,10 +29,13 @@ public class Teste extends JFrame implements KeyListener,ActionListener{
 	
 	//NO NOSSO METODO ATUALIZAR VAMOS CHAMAR OS METODOS
 	//QUE SERÃO EXECUTADOS O TEMPO INTEIRO...
+	public void setMsgatual(String msg){
+		
+	}
 	public void atualizar()  {
 		//if(Integer.parseInt(cliente.getmsgAtual())== KeyEvent.VK_ENTER)
-		if(("ESPACE"+cliente.getMYID()).equals(cliente.getmsgAtual()))
-			g1+=5;
+			
+			 
 	}
 	public void setAtualClient(Cliente player) {
 		this.cliente = player;
@@ -105,7 +108,7 @@ public class Teste extends JFrame implements KeyListener,ActionListener{
 		// TODO Auto-generated method stub
 		System.out.println(e.getKeyCode());
 		try {
-			cliente.enviarMensagem("ESPACE"+cliente.getMYID());
+			cliente.enviarMensagem("ESPACE");
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

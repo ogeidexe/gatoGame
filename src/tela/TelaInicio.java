@@ -46,7 +46,7 @@ public class TelaInicio extends JFrame  {
 	private Cliente player;
 	
 	AmbienteJogo aj;
-	
+	Teste t = new Teste();
 	public TelaInicio() {
 		
 		setTitle("Lobby");
@@ -166,7 +166,7 @@ public class TelaInicio extends JFrame  {
 			try {
 				cl.enviarMensagem(btnGato1.getText());
 				btnUsados.add(btnGato1.getText());
-				Teste t = new Teste();
+				
 				t.setAtualClient(cl);
 				t.main(ola);
 				System.out.println(cl.getMYID());
@@ -174,6 +174,9 @@ public class TelaInicio extends JFrame  {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+				btnGato2.setEnabled(false);
+				btnGato3.setEnabled(false);
+				btnGato4.setEnabled(false);
 		}
 		
 	}
@@ -189,6 +192,9 @@ public class TelaInicio extends JFrame  {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			btnGato1.setEnabled(false);
+			btnGato3.setEnabled(false);
+			btnGato4.setEnabled(false);
 		}
 		
 	}
@@ -204,6 +210,9 @@ public class TelaInicio extends JFrame  {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			btnGato2.setEnabled(false);
+			btnGato1.setEnabled(false);
+			btnGato4.setEnabled(false);
 		}
 		
 	}
@@ -219,6 +228,9 @@ public class TelaInicio extends JFrame  {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			btnGato2.setEnabled(false);
+			btnGato3.setEnabled(false);
+			btnGato1.setEnabled(false);
 		}
 		
 	}
@@ -247,7 +259,7 @@ public class TelaInicio extends JFrame  {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			try {
-				cl = new Cliente(ipServidor.getText(), 12345,TelaInicio.this);
+				cl = new Cliente(ipServidor.getText(), 12345,TelaInicio.this,t);
 				cl.start();
 				
 			} catch (UnknownHostException e2) {
@@ -292,7 +304,7 @@ public class TelaInicio extends JFrame  {
 		public void keyPressed(KeyEvent e) {
 			if(e.getKeyCode()==e.VK_ENTER) {
 				try {
-					cl = new Cliente(ipServidor.getText(), 12345,TelaInicio.this);
+					cl = new Cliente(ipServidor.getText(), 12345,TelaInicio.this,t);
 					cl.start();
 					
 				} catch (UnknownHostException e2) {
